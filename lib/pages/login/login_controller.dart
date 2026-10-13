@@ -201,6 +201,15 @@ class LoginController extends GetxController {
       duration: const Duration(seconds: 3),
     );
   }
+  //
+  // @override
+  // void onInit() {
+  //   emailCtrl.text = "testuser@test.com";
+  //   passwordCtrl.text = "BYodEgFb";
+  //
+  //   // TODO: implement onInit
+  //   super.onInit();
+  // }
 
   @override
   void onClose() {

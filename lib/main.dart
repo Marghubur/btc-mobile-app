@@ -1,6 +1,9 @@
+import 'package:conference/push_notification_manager/service/notification_handler_service.dart';
 import 'package:conference_sdk/conference_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:overlay_support/overlay_support.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'config/app_config.dart';
 import 'core/storage/storage.dart';
@@ -34,10 +37,25 @@ import 'widgets/meeting_overlay_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await AppConfig.initialize();
+
+  // Create shared preferences and load configuration
+  SharedPreferences? pref;
+  try {
+    await AppConfig.initialize();
+    pref = await SharedPreferences.getInstance();
+  } catch (e, stack) {
+    debugPrint("Failed to load app config or shared preferences: $e\n$stack");
+  }
+
   await StorageService.instance.initialize();
   await ChatStorage.instance.initialize();
   await HttpService.instance.initialize();
+
+  // Register Notification handler service
+  var handler = Get.put(NotificationHandlerService(), permanent: true);
+
+  // Register Notification handler service
+  Get.put(NotificationController(), permanent: true);
 
   // Register MeetingService as a permanent GetxService
   Get.put(MeetingService(), permanent: true);
@@ -48,11 +66,21 @@ void main() async {
   // Register ThemeService
   Get.put(ThemeService(), permanent: true);
 
-  runApp(const MyApp());
+  runApp(
+    OverlaySupport.global(
+      child: MyApp(
+        pref: pref,
+      ),
+    ),
+  );
+
+  await handler.initNotificationConfigure();
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final SharedPreferences? pref;
+
+  const MyApp({super.key, this.pref});
 
   @override
   Widget build(BuildContext context) {

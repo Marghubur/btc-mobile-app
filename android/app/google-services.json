@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "904760898632",
+    "project_id": "confeet-7971d",
+    "storage_bucket": "confeet-7971d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:904760898632:android:1b67d30a1c44117f52547d",
+        "android_client_info": {
+          "package_name": "com.bottomhalf.confeet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC01bjYNKHEnfkUWDxFu-tCQ8DC939L_gc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
